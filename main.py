@@ -6,3 +6,5 @@ response = requests.get(url)
 response.encoding = 'utf-8'
 soup = BeautifulSoup(response.text, 'lxml')
 all_books = soup.find_all('table', {"class": "news_body"})
+for i in all_books:
+    print(i)
