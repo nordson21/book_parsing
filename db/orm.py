@@ -10,10 +10,12 @@ def add_book_in_db(book_id, name, auth, desc, img_url, dl_url):
 
 
 def get_last_id_from_base():
+    """delete this old func"""
     return Book.select().order_by(Book.book_id.desc()).get()
 
 
 def get_min_id_from_base():
+    """delete this old func"""
     return Book.select().order_by(Book.book_id).get()
 
 
@@ -23,6 +25,7 @@ def del_book_from_base(book_id: int):
         del_book.delete_instance()
         print(f'Book {book_id} deleted from base')
     except Book.DoesNotExist:
+        # Raise?
         print(f'Book.DoesNotExist: {book_id} not deleted!')
 
 
@@ -41,15 +44,23 @@ def set_last_sent_in_db(book_id):
     print(f'Book {book_id} saved in last sent table')
 
 
-def get_last_sent_from_db():
+def get_last_sent_from_db() -> int:
+    """Get last sent book id from db"""
+    # Get last sent book from db
     last_book = LastSent.select()
-    if len(last_book) != 1:
+    # Check for empty database
+    if len(last_book) == 0:
+        # return first book id on page
+        return sorted(url_work.get_books_on_page(1))[0]
+    # Error check
+    elif len(last_book) > 1:
         raise DataError(f'There can only be one entry in the LastSent table.'
                         f'Records in the table LastSent {len(last_book)} ')
     return last_book[0].book_id
 
 
 def clear_books_table():
+    """Clear table Book in db"""
     Book.delete().where(Book.book_id != 0).execute()
     print('Table with books cleared')
 
