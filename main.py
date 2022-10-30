@@ -11,6 +11,8 @@ dp = Dispatcher(bot)
 async def send_books_in_group():
     """Get books from db and send they in tg channel"""
     all_books_list = orm.get_all_books_from_db()
+    if len(all_books_list) == 0:
+        await bot.send_message(channel_id, 'There is nothing new. Cron test')
     for book in all_books_list:
         book_id = book['book_id']
         name = book["name"]
