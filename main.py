@@ -32,3 +32,5 @@ async def send_books_in_group():
 if __name__ == '__main__':
     orm.update_db()
     executor.start(dp, send_books_in_group())
+
+# Cron test */1 * * * * /root/book_parsing/venv/bin/python3 /root/book_parsing/main.py> /var/log/mycron.log 2>&1
