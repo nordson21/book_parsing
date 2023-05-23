@@ -26,7 +26,7 @@ def get_books_on_page(page_num: int):
     return books_on_page
 
 
-def get_new_books(num_of_pages=5):
+def get_new_books(num_of_pages=20):
     new_books = {}
     last_book_id = orm.get_last_sent_from_db()
     print(f'last book in base: {last_book_id}')
